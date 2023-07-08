@@ -2944,8 +2944,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42bba071c0e22dd47a74f660d379a382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _BabyControl: {fileID: 0}
   shelter: {fileID: 0}
-  "\u9ED8\u8BA4\u641C\u5BFB\u65F6\u95F4": 0
+  "\u9ED8\u8BA4\u641C\u5BFB\u65F6\u95F4": 1
   shelterName:
   - {fileID: 1226268969}
   - {fileID: 891929350}

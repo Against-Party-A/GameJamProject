@@ -44,7 +44,7 @@ public class BabyControl : MonoBehaviour
     /// </summary>
     public List<Vector2> SearchPos;
 
-    private Vector2 kunkunPos;
+    private Vector2 kunkunPos = new Vector2(1 , 8);
 
     private int SearchIndex = SEARCH_COMPELETE;
 
@@ -144,6 +144,7 @@ public class BabyControl : MonoBehaviour
                 _playerState = PlayerState.Searching;
                 ///执行搜寻功能
                 ///var pos = SearchPos[SearchIndex];
+                _searchkunkun.BeginSearch();
                 break;
             case PlayerState.BackToRandomMove:
                 _playerState = PlayerState.RandomMove;
@@ -182,10 +183,19 @@ public class BabyControl : MonoBehaviour
     /// </summary>
     public void SearchSuccess()
     {
-        SearchPos.RemoveAt(SearchIndex);
-        SearchIndex = SEARCH_COMPELETE;
-        _playerState = PlayerState.BackToRandomMove;
-        _move.BeginMove(lastMovePos);
+        if (SearchPos.Count > 0)
+        {
+            SearchPos.RemoveAt(SearchIndex);
+            SearchIndex = SEARCH_COMPELETE;
+            _playerState = PlayerState.BackToRandomMove;
+            _move.BeginMove(lastMovePos); 
+        }
+        else
+        {
+            ///告诉UI孩子搜到了
+            Debug.Log("哈哈哈哈哈哈哈哈");
+        }
+
     }
 
     public void SetKunKunPos(int index)
