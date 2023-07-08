@@ -33,9 +33,12 @@ public class Player : Singleton<Player>
         {
             if(Input.GetKeyDown(KeyCode.J) && !isHolding)
             {
-                holdItem.transform.SetParent(this.transform);
-                holdItem.transform.position = this.transform.position + Vector3.left / 3 + new Vector3(0, 1.2f,0);
-                isHolding = true;
+                if (holdItem != null)
+                {
+                    holdItem.transform.SetParent(this.transform);
+                    holdItem.transform.position = this.transform.position + Vector3.left / 3 + new Vector3(0, 1.2f,0);
+                    isHolding = true;
+                }
             }
         }
         if(isHolding && canPut)

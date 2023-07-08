@@ -50,7 +50,6 @@ public class BabyControl : MonoBehaviour
     /// </summary>
     public List<Vector2> HasBeSearchPos;
 
-    public bool beginPart2 = false;
 
     private void Awake()
     {
@@ -61,7 +60,7 @@ public class BabyControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (beginPart2)
+        if (GameManager.Instance.gameState == 2)
         {
             switch (_playerState)
             {
