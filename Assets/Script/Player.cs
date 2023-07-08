@@ -13,6 +13,8 @@ public class Player : Singleton<Player>
     private bool isHolding = true;
     private bool canHold;
     private bool canPut;
+    private bool touchKid;
+    private bool firstPut = true;
     [SerializeField]private GameObject holdItem;
     private Transform shelter;
 
@@ -63,7 +65,21 @@ public class Player : Singleton<Player>
                 holdItem = null;
                 isHolding = false;
                 canPut = false;
+                if(firstPut)
+                {
+                    _BabyControl.SetKunKunPos(shelter.GetSiblingIndex());
+                    firstPut = false;
+                }
             }
+        }
+
+        if(touchKid && Input.GetKeyDown(KeyCode.J))
+        {
+            _BabyControl.ForceMove();
+        }
+        else if(touchKid && Input.GetKeyUp(KeyCode.J))
+        {
+            _BabyControl.ReturnSearch();
         }
     }
 
@@ -134,6 +150,11 @@ public class Player : Singleton<Player>
             canPut = true;
             shelter = other.transform;
         }
+
+        if(other.tag.CompareTo("Kid") == 0)
+        {
+            touchKid = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -151,6 +172,12 @@ public class Player : Singleton<Player>
         if (other.tag.CompareTo("Shelter") == 0)
         {
             canPut = false;
+        }
+
+        if (other.tag.CompareTo("Kid") == 0)
+        {
+            touchKid = false;
+            _BabyControl.ReturnSearch();
         }
     }
 

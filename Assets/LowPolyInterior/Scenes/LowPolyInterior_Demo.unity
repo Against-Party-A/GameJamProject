@@ -3047,6 +3047,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &287828454
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287828444}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!4 &305359339 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2423500719253232714, guid: 34c2eb518c8f5904781322019a1deca0, type: 3}
@@ -7530,6 +7551,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: xiaohai Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3553319236279342524, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
+      propertyPath: m_TagString
+      value: Kid
+      objectReference: {fileID: 0}
     - target: {fileID: 4180534147905638150, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -7593,6 +7618,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3553319236279342524, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 287828450}
+    - targetCorrespondingSourceObject: {fileID: 3553319236279342524, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 287828454}
   m_SourcePrefab: {fileID: 100100000, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
 --- !u!1001 &865468340
 PrefabInstance:

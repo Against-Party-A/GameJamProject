@@ -27,6 +27,7 @@ public class Task : MonoBehaviour
         if(isExecuting && Input.GetKeyUp(KeyCode.J))
         {
             isExecuting = false;
+            UIManager.Instance.StartAngerTiming();
         }
         if(timer > requestedTime)
         {
@@ -57,5 +58,6 @@ public class Task : MonoBehaviour
     {
         isStart = true;
         this.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        UIManager.Instance.StartAngerTiming();
     }
 }
