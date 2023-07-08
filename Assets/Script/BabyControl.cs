@@ -36,7 +36,7 @@ public class BabyControl : MonoBehaviour
     /// </summary>
     public List<Vector2> MovePosList;
 
-    public Vector2 lastMovePos;
+    private Vector2 lastMovePos;
 
     
     /// <summary>
@@ -44,9 +44,9 @@ public class BabyControl : MonoBehaviour
     /// </summary>
     public List<Vector2> SearchPos;
 
-    public Vector2 kunkunPos;
+    private Vector2 kunkunPos;
 
-    public int SearchIndex = SEARCH_COMPELETE;
+    private int SearchIndex = SEARCH_COMPELETE;
 
 
     private void Awake()
