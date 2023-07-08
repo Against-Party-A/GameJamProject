@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : Singleton<Player>
 {
+
+    public BabyControl _BabyControl;
+    
     private Rigidbody rig;
     private Quaternion target;
     private Vector3 input;
@@ -20,6 +23,16 @@ public class Player : Singleton<Player>
 
     protected override void Awake()
     {
+        // ///拖拽小孩。
+        // _BabyControl.ForceMove();
+        //
+        // ///取消拖拽
+        // _BabyControl.ReturnSearch();
+        //
+        // ///放入kunkun手办
+        // _BabyControl.SetKunKunPos(shelter.GetSiblingIndex());
+        
+
         base.Awake();
         rig = this.GetComponent<Rigidbody>();
         target = this.transform.rotation;

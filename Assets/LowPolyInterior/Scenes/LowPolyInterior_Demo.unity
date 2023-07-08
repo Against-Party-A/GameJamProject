@@ -2841,6 +2841,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1753955851246280489, guid: a30a1848c63e8504eade6a510775e9d2, type: 3}
   m_PrefabInstance: {fileID: 282613430}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &287828444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3553319236279342524, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
+  m_PrefabInstance: {fileID: 857715812}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &287828447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287828444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42bba071c0e22dd47a74f660d379a382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shelter: {fileID: 0}
+  "\u9ED8\u8BA4\u641C\u5BFB\u65F6\u95F4": 0
+  shelterName: []
+  shelterTime: []
+--- !u!114 &287828448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287828444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fa49b5023c62d742966369b027fcd30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endPos: {x: 10, y: 10}
+  speed: 1
+  beginMove: 0
+--- !u!114 &287828449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287828444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb89cf654eef5d44823e81e561a7848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerState: 0
+  MovePosList: []
+  lastMovePos: {x: 0, y: 0}
+  SearchPos: []
+  kunkunPos: {x: 0, y: 0}
+  SearchIndex: -99
 --- !u!4 &305359339 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2423500719253232714, guid: 34c2eb518c8f5904781322019a1deca0, type: 3}
@@ -7293,7 +7347,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3553319236279342524, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 287828449}
+    - targetCorrespondingSourceObject: {fileID: 3553319236279342524, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 287828448}
+    - targetCorrespondingSourceObject: {fileID: 3553319236279342524, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 287828447}
   m_SourcePrefab: {fileID: 100100000, guid: 8bbd49ffabecede4c9a0eb8ef0d8d7f5, type: 3}
 --- !u!1001 &865468340
 PrefabInstance:
@@ -11817,6 +11880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f066d30e8eb2b44b2bbad1a7cb8da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _BabyControl: {fileID: 287828449}
   holdItem: {fileID: 1447181820}
   speed: 2
   rotateSpeed: 10
