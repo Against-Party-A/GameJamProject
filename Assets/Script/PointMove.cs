@@ -20,11 +20,13 @@ public class PointMove : MonoBehaviour
     {
         endPos = pos;
         beginMove = true;
+        GetComponent<Rigidbody>().isKinematic = !beginMove;
     }
 
     public void EndMove()
     {
         beginMove = false;
+        GetComponent<Rigidbody>().isKinematic = !beginMove;
     }
 
     // Update is called once per frame
@@ -42,7 +44,7 @@ public class PointMove : MonoBehaviour
             {
                 Debug.Log("到达目的地");
                 _babyControl.EndMove();
-                beginMove = false;
+                EndMove();
             }
         }
     }

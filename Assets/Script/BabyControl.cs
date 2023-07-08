@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
@@ -25,6 +26,8 @@ public class BabyControl : MonoBehaviour
 
     private PointMove _move;
 
+    private Searchkunkun _searchkunkun;
+
     [FormerlySerializedAs("playerState")] 
     public PlayerState _playerState = PlayerState.Default;
     
@@ -45,16 +48,12 @@ public class BabyControl : MonoBehaviour
 
     public int SearchIndex = SEARCH_COMPELETE;
 
-    /// <summary>
-    /// 已经被搜寻过的点。
-    /// </summary>
-    public List<Vector2> HasBeSearchPos;
-
 
     private void Awake()
     {
         lastMovePos = MovePosList[^1];
         _move = GetComponent<PointMove>();
+        _searchkunkun = GetComponent<Searchkunkun>();
     }
 
     // Update is called once per frame
@@ -122,6 +121,13 @@ public class BabyControl : MonoBehaviour
         {
             ReturnSearch();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ///重新开始功能
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
+
     }
 
     public void EndMove()
@@ -173,10 +179,15 @@ public class BabyControl : MonoBehaviour
     /// </summary>
     public void SearchSuccess()
     {
-        HasBeSearchPos.Add(SearchPos[SearchIndex]);
         SearchPos.RemoveAt(SearchIndex);
         SearchIndex = SEARCH_COMPELETE;
         _playerState = PlayerState.BackToRandomMove;
         _move.BeginMove(lastMovePos);
+    }
+
+    public void SetKunKunPos(int index)
+    {
+        kunkunPos = SearchPos[index];
+        SearchPos.RemoveAt(index);
     }
 }
