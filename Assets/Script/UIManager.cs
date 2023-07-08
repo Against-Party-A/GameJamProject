@@ -44,6 +44,7 @@ public class UIManager : Singleton<UIManager>
             if(angerAmount == angerMax)
             {
                 barContainer.sprite = angerSources[1];
+                Player.Instance.MoveToParents();
             }
         }
         else if (isRelieve && angerAmount >= 0)
