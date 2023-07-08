@@ -7,6 +7,11 @@ public class Player : Singleton<Player>
     private Rigidbody rig;
     private Quaternion target;
     private Vector3 input;
+    private bool isHolding;
+    private bool canHold;
+    private bool canPut;
+    private GameObject holdItem;
+    private Transform shelter;
 
     private bool inputDisable;
     public float speed;
@@ -24,6 +29,26 @@ public class Player : Singleton<Player>
     {
         if(!inputDisable)
             GetInput();
+        if(canHold)
+        {
+            if(Input.GetKeyDown(KeyCode.J) && !isHolding)
+            {
+                holdItem.transform.SetParent(this.transform);
+                holdItem.transform.position = this.transform.position + Vector3.left / 3 + new Vector3(0, 1.2f,0);
+                isHolding = true;
+            }
+        }
+        if(isHolding && canPut)
+        {
+            if(Input.GetKeyDown(KeyCode.J))
+            {
+                holdItem.transform.SetParent(shelter);
+                holdItem.transform.position = shelter.position;
+                holdItem = null;
+                isHolding = false;
+                canPut = false;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -33,8 +58,8 @@ public class Player : Singleton<Player>
 
     private void GetInput()
     {
-        input.x = Input.GetAxis("Horizontal");
-        input.z = Input.GetAxis("Vertical");
+        input.z = Input.GetAxis("Horizontal");
+        input.x = Input.GetAxis("Vertical") * -1;
     }
 
     private void Move()
@@ -80,11 +105,36 @@ public class Player : Singleton<Player>
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * rotateSpeed);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag.CompareTo("CanHold") == 0)
+        {
+            canHold = true;
+            holdItem = other.gameObject;
+        }
+
+        if(other.tag.CompareTo("Shelter") == 0 && other.transform.childCount == 0)
+        {
+            canPut = true;
+            shelter = other.transform;
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if(other.tag.CompareTo("BedRoom") == 0)
         {
-            UIManager.Instance.StartAngerTiming();
+            UIManager.Instance.StartAngerTiming(); 
+        }
+
+        if (other.tag.CompareTo("CanHold") == 0)
+        {
+            canHold = false;
+        }
+
+        if (other.tag.CompareTo("Shelter") == 0)
+        {
+            canPut = false;
         }
     }
 

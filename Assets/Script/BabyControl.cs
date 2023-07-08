@@ -11,7 +11,6 @@ using Vector2 = UnityEngine.Vector2;
 
 public enum PlayerState
 {
-
         Default = 0,
         FixedMove = 1,
         RandomMove = 2,
