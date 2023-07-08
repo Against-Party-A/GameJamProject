@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
-    public List<GameObject> tasks;
+    public List<Task> tasks;
+
+    private bool taskBegin;
 
     private void Start()
     {
@@ -13,9 +15,10 @@ public class TaskManager : MonoBehaviour
 
     private void Update()
     {
-        if(GameManager.Instance.gameState == 2)
+        if(GameManager.Instance.gameState == 2 && !taskBegin)
         {
-            Instantiate(tasks[0], this.transform);
+            taskBegin = true;
+            tasks[0].Init();
             StartCoroutine(GenerateTask());
         }
     }
@@ -26,7 +29,7 @@ public class TaskManager : MonoBehaviour
         {
             yield return new WaitForSeconds(20);
 
-            Instantiate(tasks[i], this.transform);
+            tasks[i].Init();
         }
     }
 
@@ -35,11 +38,11 @@ public class TaskManager : MonoBehaviour
     /// </summary>
     /// <param name="original"></param>
     /// <returns></returns>
-    public List<GameObject> Shuffle(List<GameObject> original)
+    public List<Task> Shuffle(List<Task> original)
     {
         System.Random randomNum = new System.Random();
         int index = 0;
-        GameObject temp;
+        Task temp;
         for (int i = 0; i < original.Count; i++)
         {
             index = randomNum.Next(0, original.Count - 1);

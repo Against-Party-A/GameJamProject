@@ -29,7 +29,7 @@ public class Player : Singleton<Player>
     {
         if(!inputDisable)
             GetInput();
-        if(canHold)
+        if(canHold && GameManager.Instance.gameState == 1)
         {
             if(Input.GetKeyDown(KeyCode.J) && !isHolding)
             {
@@ -41,7 +41,7 @@ public class Player : Singleton<Player>
                 }
             }
         }
-        if(isHolding && canPut)
+        if(isHolding && canPut && GameManager.Instance.gameState == 1)
         {
             if(Input.GetKeyDown(KeyCode.J))
             {

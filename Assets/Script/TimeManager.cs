@@ -9,7 +9,7 @@ public class TimeManager : MonoBehaviour
     public TMP_Text time;
     public Image clock;
     public Image countDown;
-    public float actTime;
+    public float actTime;   //小孩找的时间
 
     [SerializeField]private float timer;
     private bool isChange;
