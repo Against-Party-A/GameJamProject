@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class PointMove : MonoBehaviour
 {
-    public Vector3 endPos = new Vector3(10, 1, 10);
+    private BabyControl _babyControl;
+    public Vector2 endPos = new Vector3(10, 10);
     public float speed = 1.0f;
 
     public bool beginMove = false;
-    
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        _babyControl = GetComponent<BabyControl>();
+    }
 
-    public void BeginMove(Vector3 pos)
+    public void BeginMove(Vector2 pos)
     {
         endPos = pos;
         beginMove = true;
@@ -29,16 +32,17 @@ public class PointMove : MonoBehaviour
     {
         if (beginMove)
         {
-            transform.LookAt(endPos);
-            if (transform.position != endPos)
+            var playerPos = transform.position;
+            transform.LookAt(new Vector3(endPos.x, playerPos.y, endPos.y));
+            if (new Vector2(playerPos.x , playerPos.z) != endPos)
             {
-                transform.position = Vector3.MoveTowards(transform.position, endPos, Time.deltaTime * speed);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(endPos.x, playerPos.y, endPos.y), Time.deltaTime * speed);
             }
             else
             {
                 Debug.Log("到达目的地");
+                _babyControl.EndMove();
                 beginMove = false;
-                ///这里可以执行一些功能。反正也只能执行一次
             }
         }
     }
