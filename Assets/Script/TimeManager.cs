@@ -8,6 +8,9 @@ public class TimeManager : MonoBehaviour
 {
     public TMP_Text time;
     public Image clock;
+    public Image countDown;
+    public float actTime;
+
     [SerializeField]private float timer;
     private bool isChange;
 
@@ -17,7 +20,8 @@ public class TimeManager : MonoBehaviour
         if (!isChange )
         {
             time.text = ((int)((Settings.prepareTime - timer) / 60)).ToString("00") + ":" + ((int)(Settings.prepareTime - timer) % 60).ToString("00");
-            if(timer >= Settings.prepareTime)
+            countDown.fillAmount = (Settings.prepareTime - timer) / Settings.prepareTime;
+            if (timer >= Settings.prepareTime)
             {
                 GameManager.Instance.ChangeGameState();
                 isChange = true;
@@ -26,7 +30,8 @@ public class TimeManager : MonoBehaviour
         }
         else if(isChange)
         {
-            time.text = ((int)((Settings.actTime - timer) / 60)).ToString("00") + ":" + ((int)(Settings.actTime - timer) % 60).ToString("00");
+            time.text = ((int)((actTime - timer) / 60)).ToString("00") + ":" + ((int)(actTime - timer) % 60).ToString("00");
+            countDown.fillAmount = (actTime - timer) / actTime;
         }
     }
 }
