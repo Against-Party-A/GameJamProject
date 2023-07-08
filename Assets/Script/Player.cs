@@ -8,6 +8,7 @@ public class Player : Singleton<Player>
     private Quaternion target;
 
     private Vector3 input;
+    private bool isFirstToBedroom = true;
 
     public float speed;
     public float rotateSpeed;
@@ -77,5 +78,23 @@ public class Player : Singleton<Player>
     private void TurnAround(Quaternion target)
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * rotateSpeed);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.tag.CompareTo("BedRoom") == 0)
+        {
+            if(isFirstToBedroom)
+            {
+                UIManager.Instance.StartAngerTiming();
+                isFirstToBedroom = false;
+            }
+            else
+            {
+                UIManager.Instance.StartRelieveTiming();
+                isFirstToBedroom = true;
+            }
+        }
+
     }
 }
