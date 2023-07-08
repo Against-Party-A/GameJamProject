@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Searchkunkun : MonoBehaviour
 {
+    public BabyControl _BabyControl;
     public GameObject shelter;
 
     public float 默认搜寻时间;
 
     public List<GameObject> shelterName;
     
-    public List<string> shelterTime;
+    public List<float> shelterTime;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _BabyControl = GetComponent<BabyControl>();
     }
 
     // Update is called once per frame
@@ -29,9 +30,27 @@ public class Searchkunkun : MonoBehaviour
         if (shelter.transform.childCount > 0)
         {
             var childObj = shelter.transform.GetChild(0);
+            for (int i = 0; i < shelterName.Count; i++)
+            {
+                if (shelterName[i] == childObj)
+                {
+                    time += shelterTime[i];
+                    break;
+                }
+            }
         }
+        StartCoroutine(Search(time));
     }
-    
+
+
+
+    private IEnumerator Search(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Debug.LogError("33333333333333333");
+        _BabyControl.SearchSuccess();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag.CompareTo("Shelter") == 0)
