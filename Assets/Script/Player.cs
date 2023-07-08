@@ -8,7 +8,7 @@ public class Player : Singleton<Player>
     private Quaternion target;
 
     private Vector3 input;
-    private bool isFirstToBedroom = true;
+    private bool isFirstToBedroom = true; 
 
     public float speed;
     public float rotateSpeed;
@@ -84,16 +84,11 @@ public class Player : Singleton<Player>
     {
         if(other.tag.CompareTo("BedRoom") == 0)
         {
-            if(isFirstToBedroom)
-            {
-                UIManager.Instance.StartAngerTiming();
-                isFirstToBedroom = false;
-            }
-            else
-            {
-                UIManager.Instance.StartRelieveTiming();
-                isFirstToBedroom = true;
-            }
+            UIManager.Instance.StartAngerTiming();
+        }
+        else if(other.tag.CompareTo("LivingRoom") == 0)
+        {
+            UIManager.Instance.StartRelieveTiming();
         }
     }
 }
