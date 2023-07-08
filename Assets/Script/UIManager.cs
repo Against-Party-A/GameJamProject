@@ -11,6 +11,8 @@ public class UIManager : Singleton<UIManager>
     public Sprite[] angerSources;
     public Sprite[] soundSources;
     public GameObject taughtPanel;
+    public GameObject menuPanel;
+    public GameObject gamePanel;
 
     [SerializeField]private float angerAmount;
     private int angerMax = 100;
@@ -20,6 +22,12 @@ public class UIManager : Singleton<UIManager>
     private bool isSoundOn = true;
     private int currentSound = 1;
     private bool isInTaughtPanel;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Time.timeScale = 0;
+    }
 
     private void Start()
     {
@@ -32,7 +40,24 @@ public class UIManager : Singleton<UIManager>
         if(GameManager.Instance.gameState == 2)
             Timetick();
         if (isInTaughtPanel && Input.GetMouseButtonDown(0))
+        {
             taughtPanel.SetActive(false);
+            isInTaughtPanel = false;
+            Time.timeScale = 1;
+        }
+    }
+
+    public void StartGame()
+    {
+        menuPanel.SetActive(false);
+        taughtPanel.SetActive(true);
+        gamePanel.SetActive(true);
+        isInTaughtPanel = true;
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 
     public void ChangeSound()

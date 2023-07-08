@@ -7,10 +7,10 @@ public class Player : Singleton<Player>
     private Rigidbody rig;
     private Quaternion target;
     private Vector3 input;
-    private bool isHolding;
+    private bool isHolding = true;
     private bool canHold;
     private bool canPut;
-    private GameObject holdItem;
+    [SerializeField]private GameObject holdItem;
     private Transform shelter;
 
     private bool inputDisable;
