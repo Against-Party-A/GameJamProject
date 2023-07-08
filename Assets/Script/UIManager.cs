@@ -77,4 +77,11 @@ public class UIManager : Singleton<UIManager>
         isAnger = false;
         isRelieve = true;
     }
+
+    public void MinusAnger(int amount)
+    {
+        angerAmount -= amount;
+        if (angerAmount < 0)
+            angerAmount = 0;
+    }
 }

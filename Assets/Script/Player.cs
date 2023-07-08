@@ -85,9 +85,5 @@ public class Player : Singleton<Player>
         {
             UIManager.Instance.StartAngerTiming();
         }
-        else if(other.tag.CompareTo("LivingRoom") == 0)
-        {
-            UIManager.Instance.StartRelieveTiming();
-        }
     }
 }
