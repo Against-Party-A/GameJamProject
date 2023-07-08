@@ -8,18 +8,25 @@ public class TimeManager : MonoBehaviour
 {
     public TMP_Text time;
     public Image clock;
-    private float timer;
+    [SerializeField]private float timer;
     private bool isChange;
 
     private void Update()
     {
         timer += Time.deltaTime;
-        time.text = "00:" + (Settings.prepareTime - timer).ToString("00");
-        if(timer > Settings.prepareTime && !isChange)
+        if (!isChange )
         {
-            GameManager.Instance.ChangeGameState();
-            clock.gameObject.SetActive(false);
-            isChange = true;
+            time.text = ((int)((Settings.prepareTime - timer) / 60)).ToString("00") + ":" + ((int)(Settings.prepareTime - timer) % 60).ToString("00");
+            if(timer >= Settings.prepareTime)
+            {
+                GameManager.Instance.ChangeGameState();
+                isChange = true;
+                timer = 0;
+            }
+        }
+        else if(isChange)
+        {
+            time.text = ((int)((Settings.actTime - timer) / 60)).ToString("00") + ":" + ((int)(Settings.actTime - timer) % 60).ToString("00");
         }
     }
 }

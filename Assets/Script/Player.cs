@@ -8,7 +8,6 @@ public class Player : Singleton<Player>
     private Quaternion target;
 
     private Vector3 input;
-    private bool isFirstToBedroom = true; 
 
     public float speed;
     public float rotateSpeed;
