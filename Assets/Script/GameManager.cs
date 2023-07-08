@@ -22,7 +22,6 @@ public class GameManager : Singleton<GameManager>
     public IEnumerator StateTwoStart()
     {
         yield return new WaitForSeconds(2);
-        UIManager.Instance.StartAngerTiming();
         UIManager.Instance.angerBar.gameObject.SetActive(true);
     }
 }

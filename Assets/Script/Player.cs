@@ -95,6 +95,5 @@ public class Player : Singleton<Player>
                 isFirstToBedroom = true;
             }
         }
-
     }
 }
