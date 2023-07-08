@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>
 {
     public Image angerBar;
+    public Image barContainer;
+    public Sprite[] angerSources;
 
     [SerializeField]private float angerAmount;
     private int angerMax = 100;
@@ -26,7 +28,7 @@ public class UIManager : Singleton<UIManager>
 
     private void Timetick()
     {
-        if (isAnger)
+        if (isAnger && angerAmount <= angerMax)
         {
             if (angerTimer > Settings.angerThreshold)
             {
@@ -38,8 +40,13 @@ public class UIManager : Singleton<UIManager>
             {
                 angerTimer += Time.deltaTime;
             }
+
+            if(angerAmount == angerMax)
+            {
+                barContainer.sprite = angerSources[1];
+            }
         }
-        else if (isRelieve)
+        else if (isRelieve && angerAmount >= 0)
         {
             if (angerTimer > Settings.relieveThreshold)
             {
@@ -50,6 +57,11 @@ public class UIManager : Singleton<UIManager>
             else
             {
                 angerTimer += Time.deltaTime;
+            }
+
+            if(angerAmount < angerMax * 3 / 4)
+            {
+                barContainer.sprite = angerSources[0];
             }
         }
     }
