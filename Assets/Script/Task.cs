@@ -34,6 +34,8 @@ public class Task : MonoBehaviour
             isComplete = true;
             UIManager.Instance.MinusAnger(costAnger);
             this.transform.localScale = new Vector3(1f, 1f, 1f);
+            UIManager.Instance.StartAngerTiming();
+            this.GetComponent<Task>().enabled = false;
         }
     }
 
@@ -50,6 +52,7 @@ public class Task : MonoBehaviour
         if (other.tag.CompareTo("Player") == 0 && !isComplete && isStart)
         {
             isExecuting = false;
+            canExecute = false;
             UIManager.Instance.StartAngerTiming();
         }
     }
