@@ -13,11 +13,22 @@ public class UIManager : Singleton<UIManager>
     private bool isAnger;
     private bool isRelieve;
 
+    private void Start()
+    {
+        angerBar.gameObject.SetActive(false);
+    }
+
     private void Update()
     {
-        if(isAnger)
+        if(GameManager.Instance.gameState == 2)
+            Timetick();
+    }
+
+    private void Timetick()
+    {
+        if (isAnger)
         {
-            if(angerTimer > Settings.angerThreshold)
+            if (angerTimer > Settings.angerThreshold)
             {
                 angerAmount++;
                 angerBar.fillAmount = angerAmount / angerMax;
@@ -28,7 +39,7 @@ public class UIManager : Singleton<UIManager>
                 angerTimer += Time.deltaTime;
             }
         }
-        else if(isRelieve)
+        else if (isRelieve)
         {
             if (angerTimer > Settings.relieveThreshold)
             {
