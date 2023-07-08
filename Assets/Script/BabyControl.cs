@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 
+
+
 public enum PlayerState
 {
 
@@ -14,10 +16,12 @@ public enum PlayerState
         FixedMove = 1,
         RandomMove = 2,
         Searching = 3,
-        ForcedMove = 4 ///被玩家拖拽的时候
+        BackToRandomMove = 4,
+        ForcedMove = 5, ///被玩家拖拽的时候
 }
 public class BabyControl : MonoBehaviour
 {
+    public const int SEARCH_COMPELETE = -99;
     ///目前逻辑是，先去走到中心点，然后再去搜寻点，防止穿模等问题。然后开始搜寻。
 
     private PointMove _move;
@@ -38,7 +42,9 @@ public class BabyControl : MonoBehaviour
     /// </summary>
     public List<Vector2> SearchPos;
 
-    public int SearchIndex;
+    public Vector2 kunkunPos;
+
+    public int SearchIndex = SEARCH_COMPELETE;
 
     /// <summary>
     /// 已经被搜寻过的点。
@@ -67,8 +73,8 @@ public class BabyControl : MonoBehaviour
                     ///先去固定位置。
                     foreach (var pos in MovePosList)
                     {
-                        ///通过X轴判断已经到达的房间（先这么写）
-                        if (transform.position.x > pos.x)
+                        ///通过z轴判断已经到达的房间（先这么写）
+                        if (transform.position.z >= pos.y)
                         {
                             continue;
                         }
@@ -83,26 +89,40 @@ public class BabyControl : MonoBehaviour
                     ///随机挑选一个地点去搜索
                     if (!_move.beginMove)
                     {
-                        SearchIndex = Random.Range(0, SearchPos.Count - 1);
-                        var Search = SearchPos[SearchIndex];
+                        var Search = kunkunPos;
+                        if (SearchPos.Count != 0)
+                        {
+                            if (SearchIndex == SEARCH_COMPELETE)
+                            {
+                                SearchIndex = Random.Range(0, SearchPos.Count - 1);
+                            }
+                            Search = SearchPos[SearchIndex];
+                        }
                         _move.BeginMove(Search);
                     }
                     break;
                 case PlayerState.Searching:
-                    ///执行搜寻功能
-                    
-                    
                     break;
                 case PlayerState.ForcedMove:
                     ///执行强制移动动画
                     /// 人物pos跟随主角pos移动
                     
                     
-                    
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SearchSuccess();
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ForceMove();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ReturnSearch();
         }
     }
 
@@ -121,6 +141,44 @@ public class BabyControl : MonoBehaviour
                 ///执行搜寻功能
                 ///var pos = SearchPos[SearchIndex];
                 break;
+            case PlayerState.BackToRandomMove:
+                _playerState = PlayerState.RandomMove;
+                break;
         }
+    }
+
+    public void ForceMove()
+    {
+        _playerState = PlayerState.ForcedMove;
+        if (_move.beginMove)
+        {
+            _move.EndMove();
+        }
+    }
+
+    public void ReturnSearch()
+    {
+        if (lastMovePos.y > transform.position.z)
+        {
+            _playerState = PlayerState.FixedMove;
+        }
+        else
+        {
+            _playerState = PlayerState.BackToRandomMove;
+            _move.BeginMove(lastMovePos);
+        }
+    }
+
+
+    /// <summary>
+    /// 搜寻结束后调用
+    /// </summary>
+    public void SearchSuccess()
+    {
+        HasBeSearchPos.Add(SearchPos[SearchIndex]);
+        SearchPos.RemoveAt(SearchIndex);
+        SearchIndex = SEARCH_COMPELETE;
+        _playerState = PlayerState.BackToRandomMove;
+        _move.BeginMove(lastMovePos);
     }
 }
