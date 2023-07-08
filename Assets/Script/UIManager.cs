@@ -7,23 +7,39 @@ public class UIManager : Singleton<UIManager>
 {
     public Image angerBar;
     public Image barContainer;
+    public Image soundImage;
     public Sprite[] angerSources;
+    public Sprite[] soundSources;
+    public GameObject taughtPanel;
 
     [SerializeField]private float angerAmount;
     private int angerMax = 100;
     [SerializeField]private float angerTimer;
     private bool isAnger;
     private bool isRelieve;
+    private bool isSoundOn = true;
+    private int currentSound = 1;
+    private bool isInTaughtPanel;
 
     private void Start()
     {
         angerBar.gameObject.SetActive(false);
+        soundImage.sprite = soundSources[0];
     }
 
     private void Update()
     {
         if(GameManager.Instance.gameState == 2)
             Timetick();
+        if (isInTaughtPanel && Input.GetMouseButtonDown(0))
+            taughtPanel.SetActive(false);
+    }
+
+    public void ChangeSound()
+    {
+        currentSound = 1 - currentSound;
+        isSoundOn = !isSoundOn;
+        soundImage.sprite = soundSources[currentSound];
     }
 
     private void Timetick()
@@ -44,6 +60,7 @@ public class UIManager : Singleton<UIManager>
             if(angerAmount == angerMax)
             {
                 barContainer.sprite = angerSources[1];
+                Player.Instance.MoveToParents();
             }
         }
         else if (isRelieve && angerAmount >= 0)

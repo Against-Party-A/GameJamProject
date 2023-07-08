@@ -6,12 +6,12 @@ public class Player : Singleton<Player>
 {
     private Rigidbody rig;
     private Quaternion target;
-
     private Vector3 input;
 
+    private bool inputDisable;
     public float speed;
     public float rotateSpeed;
-
+    public Transform parents;
 
     protected override void Awake()
     {
@@ -22,7 +22,8 @@ public class Player : Singleton<Player>
 
     private void Update()
     {
-        GetInput();
+        if(!inputDisable)
+            GetInput();
     }
 
     private void FixedUpdate()
@@ -85,5 +86,20 @@ public class Player : Singleton<Player>
         {
             UIManager.Instance.StartAngerTiming();
         }
+    }
+
+    public void MoveToParents()
+    {
+        inputDisable = true;
+        this.transform.position = parents.position;
+        StartCoroutine(Stand());
+    }
+
+    private IEnumerator Stand()
+    {
+        yield return new WaitForSeconds(10);
+
+        UIManager.Instance.MinusAnger(100);
+        inputDisable = false;
     }
 }
