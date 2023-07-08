@@ -5,16 +5,19 @@ using UnityEngine;
 public class Player : Singleton<Player>
 {
     private Rigidbody rig;
+    private Quaternion target;
 
     private Vector3 input;
 
     public float speed;
     public float rotateSpeed;
 
+
     protected override void Awake()
     {
         base.Awake();
         rig = this.GetComponent<Rigidbody>();
+        target = this.transform.rotation;
     }
 
     private void Update()
@@ -36,7 +39,6 @@ public class Player : Singleton<Player>
     private void Move()
     {
         rig.MovePosition(this.transform.position + input * speed * Time.deltaTime);
-        Quaternion target = this.transform.rotation;
         if (input.x > 0 && input.z == 0)
         {
             target = Quaternion.Euler(new Vector3(0, 90, 0));
@@ -59,7 +61,7 @@ public class Player : Singleton<Player>
         }
         else if (input.x > 0 && input.z < 0)
         {
-            target = Quaternion.Euler(new Vector3(0, -135, 0));
+            target = Quaternion.Euler(new Vector3(0, 135, 0));
         }
         else if(input.x < 0 && input.z > 0)
         {
