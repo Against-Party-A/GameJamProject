@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   costAnger: 20
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 1013716018}
   timer: 0
 --- !u!65 &123079782
 BoxCollider:
@@ -2617,7 +2617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   costAnger: 20
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 1988207906}
   timer: 0
 --- !u!65 &228174388
 BoxCollider:
@@ -7970,7 +7970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   costAnger: 20
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 127489686}
   timer: 0
 --- !u!65 &813918105
 BoxCollider:
@@ -13162,7 +13162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   costAnger: 20
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 63846560}
   timer: 0
 --- !u!65 &1300389499
 BoxCollider:
