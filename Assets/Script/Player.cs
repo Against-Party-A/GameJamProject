@@ -45,6 +45,7 @@ public class Player : Singleton<Player>
                 if (holdItem != null && holdItem.name != "IKUN666")
                 {
                     holdItem.transform.SetParent(this.transform);
+                    holdItem.transform.localScale /= 1.5f;
                     holdItem.transform.position = this.transform.position + Vector3.left / 3 + new Vector3(0, 1.2f,0);
                     isHolding = true;
                 }
@@ -154,6 +155,7 @@ public class Player : Singleton<Player>
             if (holdItem == null)
             {
                 holdItem = other.gameObject;
+                holdItem.transform.localScale *= 1.5f;
             }
         }
 
@@ -181,6 +183,7 @@ public class Player : Singleton<Player>
             canHold = false;
             if (other.gameObject == holdItem)
             {
+                holdItem.transform.localScale /= 1.5f;
                 holdItem = null;
             }
         }
