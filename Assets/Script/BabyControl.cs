@@ -149,14 +149,17 @@ public class BabyControl : MonoBehaviour
 
     public void ForceMove()
     {
-        dis = transform.position - Player.Instance.transform.position;
-        _playerState = PlayerState.ForcedMove;
-        
-        if (_move.beginMove)
+        if (GameManager.Instance.gameState == 2)
         {
-            _move.EndMove();
+            dis = transform.position - Player.Instance.transform.position;
+            _playerState = PlayerState.ForcedMove;
+        
+            if (_move.beginMove)
+            {
+                _move.EndMove();
+            }
+            _move._animator.SetBool("ForcedMove" , true);
         }
-        _move._animator.SetBool("ForcedMove" , true);
     }
 
     public void ReturnSearch()

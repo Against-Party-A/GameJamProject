@@ -25,8 +25,10 @@ public class UIManager : Singleton<UIManager>
     private bool isAnger;
     private bool isRelieve;
     private bool isSoundOn = true;
-    private int currentSound = 1;
+    private int currentSound = 0;
     private bool isInTaughtPanel;
+
+    public List<AudioSource> _audioSources;
 
     protected override void Awake()
     {
@@ -69,6 +71,12 @@ public class UIManager : Singleton<UIManager>
     {
         currentSound = 1 - currentSound;
         isSoundOn = !isSoundOn;
+
+        foreach (var source in _audioSources)
+        {
+            source.volume = isSoundOn ? 100 : 0;
+        }
+        
         soundImage.sprite = soundSources[currentSound];
     }
 
@@ -137,6 +145,10 @@ public class UIManager : Singleton<UIManager>
             angerAmount = 0;
     }
 
+    public AudioSource bgm;
+    public AudioSource victoryAudio;
+    public AudioSource defeatAudio;
+
     public void PlayEnd(int index)
     {
         if(endPanel.activeSelf) 
@@ -147,8 +159,15 @@ public class UIManager : Singleton<UIManager>
         videoplayer.Play();
 
         videoplayer.isLooping = index == 1;
-
-
+        bgm.Stop();
+        if (index == 1)
+        {
+            victoryAudio.Play();
+        }
+        else
+        {
+            defeatAudio.Play();
+        }
 
     }
 }

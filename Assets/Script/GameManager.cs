@@ -8,6 +8,8 @@ public class GameManager : Singleton<GameManager>
 
     private float timer;
 
+    public AudioSource beginGame;
+
     private void Update()
     {
 
@@ -18,6 +20,7 @@ public class GameManager : Singleton<GameManager>
         gameState = 2;
         if (Player.Instance.transform.Find("IKUN666") == null)
         {
+            beginGame.Play();
             StartCoroutine(StateTwoStart());
         }
         else

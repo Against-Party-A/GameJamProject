@@ -25,6 +25,8 @@ public class Player : Singleton<Player>
 
     private Animator _animator;
 
+    public AudioSource putAndDown;
+
     protected override void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -48,6 +50,7 @@ public class Player : Singleton<Player>
                     holdItem.transform.localScale /= 1.5f;
                     holdItem.transform.position = this.transform.position + Vector3.left / 3 + new Vector3(0, 1.2f,0);
                     isHolding = true;
+                    putAndDown.Play();
                 }
             }
         }
@@ -61,6 +64,7 @@ public class Player : Singleton<Player>
                 holdItem = null;
                 isHolding = false;
                 canPut = false;
+                putAndDown.Play();
                 if(firstPut)
                 {
                     _BabyControl.SetKunKunPos(shelter.GetSiblingIndex());
