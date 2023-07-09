@@ -20,7 +20,7 @@ public class Task : MonoBehaviour
         {
             isExecuting = true;
             UIManager.Instance.StartRelieveTiming();
-            Player.Instance.GetComponent<Animator>().SetInteger("Action", 1);
+            Player.Instance.GetComponent<Animator>().SetBool("Dance", true);
         }
         if(isExecuting)
         {
@@ -30,7 +30,7 @@ public class Task : MonoBehaviour
         {
             isExecuting = false;
             UIManager.Instance.StartAngerTiming();
-            Player.Instance.GetComponent<Animator>().SetInteger("Action", 0);
+            Player.Instance.GetComponent<Animator>().SetBool("Dance", false);
 
         }
         if(timer > requestedTime)

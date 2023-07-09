@@ -19,8 +19,8 @@ public class UIManager : Singleton<UIManager>
     public GameObject gamePanel;
     public GameObject endPanel;
 
-    [SerializeField]private float angerAmount;
-    private int angerMax = 100;
+    public float angerAmount;
+    public int angerMax = 100;
     [SerializeField]private float angerTimer;
     private bool isAnger;
     private bool isRelieve;

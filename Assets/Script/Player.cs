@@ -152,6 +152,12 @@ public class Player : Singleton<Player>
                 playerMove.Stop();
             }
         }
+
+
+        if (transform.position.z < 2.5f && _BabyControl._playerState == PlayerState.ForcedMove)
+        {
+            UIManager.Instance.angerAmount = UIManager.Instance.angerMax;
+        }
     }
 
     private void TurnAround(Quaternion target)
