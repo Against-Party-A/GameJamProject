@@ -218,6 +218,6 @@ public class Player : Singleton<Player>
         UIManager.Instance.MinusAnger(100);
         inputDisable = false;
         GetComponent<Rigidbody>().isKinematic = false;
-
+        UIManager.Instance.ChangeBarContainer();
     }
 }
