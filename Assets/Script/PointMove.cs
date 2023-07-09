@@ -10,10 +10,12 @@ public class PointMove : MonoBehaviour
     public float speed = 1.0f;
 
     public bool beginMove = false;
+    public Animator _animator;
 
     private void Awake()
     {
         _babyControl = GetComponent<BabyControl>();
+        _animator = GetComponent<Animator>();
     }
 
     public void BeginMove(Vector2 pos)
@@ -21,12 +23,14 @@ public class PointMove : MonoBehaviour
         endPos = pos;
         beginMove = true;
         GetComponent<Rigidbody>().isKinematic = !beginMove;
+        _animator.SetBool("isWalking", true);
     }
 
     public void EndMove()
     {
         beginMove = false;
         GetComponent<Rigidbody>().isKinematic = !beginMove;
+        _animator.SetBool("isWalking", false);
     }
 
     // Update is called once per frame
@@ -42,7 +46,6 @@ public class PointMove : MonoBehaviour
             }
             else
             {
-                Debug.Log("到达目的地");
                 _babyControl.EndMove();
                 EndMove();
             }

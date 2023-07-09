@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
-
+using Vector3 = UnityEngine.Vector3;
 
 
 public enum PlayerState
@@ -49,7 +49,10 @@ public class BabyControl : MonoBehaviour
     private int SearchIndex = SEARCH_COMPELETE;
 
 
-    private void Awake()
+    private Vector3 dis;
+
+
+    private void Start()
     {
         lastMovePos = MovePosList[^1];
         _move = GetComponent<PointMove>();
@@ -103,8 +106,7 @@ public class BabyControl : MonoBehaviour
                 case PlayerState.ForcedMove:
                     ///执行强制移动动画
                     /// 人物pos跟随主角pos移动
-                    
-                    
+                    transform.position = Player.Instance.transform.position + dis;
                     break;
             }
         }
@@ -121,13 +123,6 @@ public class BabyControl : MonoBehaviour
         {
             ReturnSearch();
         }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ///重新开始功能
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        }
-
     }
 
     public void EndMove()
@@ -154,26 +149,30 @@ public class BabyControl : MonoBehaviour
 
     public void ForceMove()
     {
+        dis = transform.position - Player.Instance.transform.position;
         _playerState = PlayerState.ForcedMove;
+        
         if (_move.beginMove)
         {
             _move.EndMove();
         }
-
-
-
+        _move._animator.SetBool("ForcedMove" , true);
     }
 
     public void ReturnSearch()
     {
-        if (lastMovePos.y > transform.position.z)
+        if (_playerState == PlayerState.ForcedMove)
         {
-            _playerState = PlayerState.FixedMove;
-        }
-        else
-        {
-            _playerState = PlayerState.BackToRandomMove;
-            _move.BeginMove(lastMovePos);
+            _move._animator.SetBool("ForcedMove" , false);
+            if (lastMovePos.y > transform.position.z)
+            {
+                _playerState = PlayerState.FixedMove;
+            }
+            else
+            {
+                _playerState = PlayerState.BackToRandomMove;
+                _move.BeginMove(lastMovePos);
+            }
         }
     }
 
@@ -194,7 +193,6 @@ public class BabyControl : MonoBehaviour
         {
             UIManager.Instance.PlayEnd(0);
             ///告诉UI孩子搜到了
-            Debug.Log("哈哈哈哈哈哈哈哈");
         }
 
     }
@@ -203,5 +201,12 @@ public class BabyControl : MonoBehaviour
     {
         kunkunPos = SearchPos[index];
         SearchPos.RemoveAt(index);
+    }
+
+
+    public void ResetAll()
+    {
+        ///重新开始功能
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 }

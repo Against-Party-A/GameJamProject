@@ -16,7 +16,14 @@ public class GameManager : Singleton<GameManager>
     public void ChangeGameState()
     {
         gameState = 2;
-        StartCoroutine(StateTwoStart());
+        if (Player.Instance.transform.Find("IKUN666") == null)
+        {
+            StartCoroutine(StateTwoStart());
+        }
+        else
+        {
+            UIManager.Instance.PlayEnd(0);
+        }
     }
 
     public IEnumerator StateTwoStart()

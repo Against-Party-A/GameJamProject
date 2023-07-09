@@ -23,18 +23,11 @@ public class Player : Singleton<Player>
     public float rotateSpeed;
     public Transform parents;
 
+    private Animator _animator;
+
     protected override void Awake()
     {
-        // ///拖拽小孩。
-        // _BabyControl.ForceMove();
-        //
-        // ///取消拖拽
-        // _BabyControl.ReturnSearch();
-        //
-        // ///放入kunkun手办
-        // _BabyControl.SetKunKunPos(shelter.GetSiblingIndex());
-        
-
+        _animator = GetComponent<Animator>();
         base.Awake();
         rig = this.GetComponent<Rigidbody>();
         target = this.transform.rotation;
@@ -46,9 +39,10 @@ public class Player : Singleton<Player>
             GetInput();
         if(canHold && GameManager.Instance.gameState == 1)
         {
+            
             if(Input.GetKeyDown(KeyCode.J) && !isHolding)
             {
-                if (holdItem != null)
+                if (holdItem != null && holdItem.name != "IKUN666")
                 {
                     holdItem.transform.SetParent(this.transform);
                     holdItem.transform.position = this.transform.position + Vector3.left / 3 + new Vector3(0, 1.2f,0);
@@ -56,7 +50,8 @@ public class Player : Singleton<Player>
                 }
             }
         }
-        if(isHolding && canPut && GameManager.Instance.gameState == 1)
+        
+        if(isHolding && canPut)
         {
             if(Input.GetKeyDown(KeyCode.J))
             {
@@ -73,13 +68,19 @@ public class Player : Singleton<Player>
             }
         }
 
-        if(touchKid && Input.GetKeyDown(KeyCode.J))
+
+        if (touchKid)
         {
-            _BabyControl.ForceMove();
-        }
-        else if(touchKid && Input.GetKeyUp(KeyCode.J))
-        {
-            _BabyControl.ReturnSearch();
+            if (_BabyControl._playerState == PlayerState.ForcedMove && Input.GetKeyUp(KeyCode.J))
+            {
+                _BabyControl.ReturnSearch();
+            }
+            
+            
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                _BabyControl.ForceMove();
+            }
         }
     }
 
@@ -96,40 +97,48 @@ public class Player : Singleton<Player>
 
     private void Move()
     {
-        rig.MovePosition(this.transform.position + input * speed * Time.deltaTime);
-        if (input.x > 0 && input.z == 0)
+        if (input.x != 0 || input.z != 0)
         {
-            target = Quaternion.Euler(new Vector3(0, 90, 0));
+            _animator.SetBool("isWalking", true);
+            rig.MovePosition(this.transform.position + input * speed * Time.deltaTime);
+            if (input.x > 0 && input.z == 0)
+            {
+                target = Quaternion.Euler(new Vector3(0, 90, 0));
+            }
+            else if (input.x < 0 && input.z == 0)
+            {
+                target = Quaternion.Euler(new Vector3(0, -90, 0));
+            }
+            else if (input.z > 0 && input.x == 0)
+            {
+                target = Quaternion.Euler(new Vector3(0, 0, 0));
+            }
+            else if (input.z < 0 && input.x == 0)
+            {
+                target = Quaternion.Euler(new Vector3(0, 180, 0));
+            }
+            else if (input.x > 0 && input.z > 0)
+            {
+                target = Quaternion.Euler(new Vector3(0, 45, 0));
+            }
+            else if (input.x > 0 && input.z < 0)
+            {
+                target = Quaternion.Euler(new Vector3(0, 135, 0));
+            }
+            else if(input.x < 0 && input.z > 0)
+            {
+                target = Quaternion.Euler(new Vector3(0, -45, 0));
+            }
+            else if(input.x < 0 && input.z < 0)
+            {
+                target = Quaternion.Euler(new Vector3(0, 225, 0));
+            }
+            TurnAround(target);
         }
-        else if (input.x < 0 && input.z == 0)
+        else
         {
-            target = Quaternion.Euler(new Vector3(0, -90, 0));
+            _animator.SetBool("isWalking", false);
         }
-        else if (input.z > 0 && input.x == 0)
-        {
-            target = Quaternion.Euler(new Vector3(0, 0, 0));
-        }
-        else if (input.z < 0 && input.x == 0)
-        {
-            target = Quaternion.Euler(new Vector3(0, 180, 0));
-        }
-        else if (input.x > 0 && input.z > 0)
-        {
-            target = Quaternion.Euler(new Vector3(0, 45, 0));
-        }
-        else if (input.x > 0 && input.z < 0)
-        {
-            target = Quaternion.Euler(new Vector3(0, 135, 0));
-        }
-        else if(input.x < 0 && input.z > 0)
-        {
-            target = Quaternion.Euler(new Vector3(0, -45, 0));
-        }
-        else if(input.x < 0 && input.z < 0)
-        {
-            target = Quaternion.Euler(new Vector3(0, 225, 0));
-        }
-        TurnAround(target);
     }
 
     private void TurnAround(Quaternion target)
@@ -142,7 +151,10 @@ public class Player : Singleton<Player>
         if(other.tag.CompareTo("CanHold") == 0)
         {
             canHold = true;
-            holdItem = other.gameObject;
+            if (holdItem == null)
+            {
+                holdItem = other.gameObject;
+            }
         }
 
         if(other.tag.CompareTo("Shelter") == 0 && other.transform.childCount == 0)
@@ -167,32 +179,40 @@ public class Player : Singleton<Player>
         if (other.tag.CompareTo("CanHold") == 0)
         {
             canHold = false;
+            if (other.gameObject == holdItem)
+            {
+                holdItem = null;
+            }
         }
 
         if (other.tag.CompareTo("Shelter") == 0)
         {
             canPut = false;
         }
-
-        if (other.tag.CompareTo("Kid") == 0)
+        
+        if(other.tag.CompareTo("Kid") == 0)
         {
             touchKid = false;
-            _BabyControl.ReturnSearch();
         }
+        
     }
 
     public void MoveToParents()
     {
         inputDisable = true;
         this.transform.position = parents.position;
+        _BabyControl.ReturnSearch();
         StartCoroutine(Stand());
     }
 
     private IEnumerator Stand()
     {
+        GetComponent<Rigidbody>().isKinematic = true;
         yield return new WaitForSeconds(10);
 
         UIManager.Instance.MinusAnger(100);
         inputDisable = false;
+        GetComponent<Rigidbody>().isKinematic = false;
+
     }
 }

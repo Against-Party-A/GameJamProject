@@ -27,7 +27,7 @@ public class Searchkunkun : MonoBehaviour
     public void BeginSearch()
     {
         float time = 默认搜寻时间;
-        if (shelter.transform.childCount > 0)
+        if (shelter != null && shelter.transform.childCount > 0)
         {
             var childObj = shelter.transform.GetChild(0);
             for (int i = 0; i < shelterName.Count; i++)
@@ -39,6 +39,7 @@ public class Searchkunkun : MonoBehaviour
                 }
             }
         }
+
         StartCoroutine(Search(time));
     }
 
@@ -47,7 +48,6 @@ public class Searchkunkun : MonoBehaviour
     private IEnumerator Search(float time)
     {
         yield return new WaitForSeconds(time);
-        Debug.LogError("33333333333333333");
         _BabyControl.SearchSuccess();
     }
 

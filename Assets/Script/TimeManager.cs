@@ -14,28 +14,30 @@ public class TimeManager : MonoBehaviour
     [SerializeField]private float timer;
     private bool isChange;
 
+
     private void Update()
     {
         timer += Time.deltaTime;
-        if (!isChange )
-        {
-            time.text = ((int)((Settings.prepareTime - timer) / 60)).ToString("00") + ":" + ((int)(Settings.prepareTime - timer) % 60).ToString("00");
-            countDown.fillAmount = (Settings.prepareTime - timer) / Settings.prepareTime;
-            if (timer >= Settings.prepareTime)
+            if (!isChange )
             {
-                GameManager.Instance.ChangeGameState();
-                isChange = true;
-                timer = 0;
+                time.text = ((int)((Settings.prepareTime - timer) / 60)).ToString("00") + ":" + ((int)(Settings.prepareTime - timer) % 60).ToString("00");
+                countDown.fillAmount = (Settings.prepareTime - timer) / Settings.prepareTime;
+                if (timer >= Settings.prepareTime)
+                {
+                    GameManager.Instance.ChangeGameState();
+                    isChange = true;
+                    timer = 0;
+                }
             }
-        }
-        else if(isChange)
-        {
-            time.text = ((int)((actTime - timer) / 60)).ToString("00") + ":" + ((int)(actTime - timer) % 60).ToString("00");
-            countDown.fillAmount = (actTime - timer) / actTime;
-            if((actTime - timer) <= 0)
+            else if(isChange)
             {
-                UIManager.Instance.PlayEnd(1);
+                time.text = ((int)((actTime - timer) / 60)).ToString("00") + ":" + ((int)(actTime - timer) % 60).ToString("00");
+                countDown.fillAmount = (actTime - timer) / actTime;
+                if((actTime - timer) <= 0)
+                {
+                    UIManager.Instance.PlayEnd(1);
+                }
             }
-        }
+        
     }
 }

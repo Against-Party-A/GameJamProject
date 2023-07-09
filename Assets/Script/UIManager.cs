@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
@@ -58,7 +59,7 @@ public class UIManager : Singleton<UIManager>
         gamePanel.SetActive(true);
         isInTaughtPanel = true;
     }
-
+    
     public void Exit()
     {
         Application.Quit();
@@ -90,6 +91,7 @@ public class UIManager : Singleton<UIManager>
             {
                 barContainer.sprite = angerSources[1];
                 Player.Instance.MoveToParents();
+                
             }
         }
         else if (isRelieve && angerAmount >= 0)
@@ -136,5 +138,11 @@ public class UIManager : Singleton<UIManager>
         endPanel.SetActive(true);
         videoplayer.clip = videoSources[index];
         videoplayer.Play();
+
+
+        videoplayer.isLooping = index == 1;
+
+
+
     }
 }

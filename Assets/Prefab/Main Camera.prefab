@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: {fileID: 0}
   clock: {fileID: 0}
+  countDown: {fileID: 0}
   actTime: 90
   timer: 0
 --- !u!114 &6766460514499152959
