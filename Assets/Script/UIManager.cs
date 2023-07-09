@@ -14,7 +14,14 @@ public class UIManager : Singleton<UIManager>
     public Sprite[] angerSources;
     public Sprite[] soundSources;
     public VideoClip[] videoSources;
+
+    public GameObject tip1;
+    public GameObject tip2;
     public GameObject taughtPanel;
+    public GameObject tip3;
+    public GameObject tip4;
+
+    
     public GameObject menuPanel;
     public GameObject gamePanel;
     public GameObject endPanel;
@@ -46,18 +53,45 @@ public class UIManager : Singleton<UIManager>
     {
         if(GameManager.Instance.gameState == 2)
             Timetick();
-        if (isInTaughtPanel && Input.GetMouseButtonDown(0))
+        
+        
+        
+        if (isInTaughtPanel && Input.anyKeyDown)
         {
-            taughtPanel.SetActive(false);
-            isInTaughtPanel = false;
-            Time.timeScale = 1;
+            if (tip1.activeSelf)
+            {
+                tip1.SetActive(false);
+                tip2.SetActive(true);
+            }
+            else if (tip2.activeSelf)
+            {
+                tip2.SetActive(false);
+                taughtPanel.SetActive(true);
+            }
+            else if (taughtPanel.activeSelf)
+            {
+                taughtPanel.SetActive(false);
+                isInTaughtPanel = false;
+                Time.timeScale = 1;
+            }
+            else if (tip3.activeSelf)
+            {
+                tip3.SetActive(false);
+                tip4.SetActive(true);
+            }
+            else if(tip4.activeSelf)
+            {
+                tip4.SetActive(false);
+                isInTaughtPanel = false;
+                Time.timeScale = 1;
+            }
         }
     }
 
     public void StartGame()
     {
         menuPanel.SetActive(false);
-        taughtPanel.SetActive(true);
+        tip1.SetActive(true);
         gamePanel.SetActive(true);
         isInTaughtPanel = true;
     }
@@ -171,5 +205,15 @@ public class UIManager : Singleton<UIManager>
             defeatAudio.Play();
         }
 
+    }
+
+    public Image blockBack;
+    public Sprite redBack;
+    public void BeginPart2()
+    {
+        blockBack.sprite = redBack;
+        tip3.SetActive(true);
+        isInTaughtPanel = true;
+        Time.timeScale = 0;
     }
 }

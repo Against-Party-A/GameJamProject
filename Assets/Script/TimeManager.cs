@@ -18,26 +18,29 @@ public class TimeManager : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-            if (!isChange )
+        if (!isChange)
+        {
+            time.text = ((int)((Settings.prepareTime - timer) / 60)).ToString("00") + ":" +
+                        ((int)(Settings.prepareTime - timer) % 60).ToString("00");
+            countDown.fillAmount = (Settings.prepareTime - timer) / Settings.prepareTime;
+            if (timer >= Settings.prepareTime)
             {
-                time.text = ((int)((Settings.prepareTime - timer) / 60)).ToString("00") + ":" + ((int)(Settings.prepareTime - timer) % 60).ToString("00");
-                countDown.fillAmount = (Settings.prepareTime - timer) / Settings.prepareTime;
-                if (timer >= Settings.prepareTime)
-                {
-                    GameManager.Instance.ChangeGameState();
-                    isChange = true;
-                    timer = 0;
-                }
+                GameManager.Instance.ChangeGameState();
+                UIManager.Instance.BeginPart2();
+                isChange = true;
+                timer = 0;
             }
-            else if(isChange)
+        }
+        else 
+        {
+            time.text = ((int)((actTime - timer) / 60)).ToString("00") + ":" +
+                        ((int)(actTime - timer) % 60).ToString("00");
+            countDown.fillAmount = (actTime - timer) / actTime;
+            if ((actTime - timer) <= 0)
             {
-                time.text = ((int)((actTime - timer) / 60)).ToString("00") + ":" + ((int)(actTime - timer) % 60).ToString("00");
-                countDown.fillAmount = (actTime - timer) / actTime;
-                if((actTime - timer) <= 0)
-                {
-                    UIManager.Instance.PlayEnd(1);
-                }
+                UIManager.Instance.PlayEnd(1);
             }
-        
+        }
+
     }
 }

@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     public void ChangeGameState()
     {
         gameState = 2;
+        
         if (Player.Instance.transform.Find("IKUN666") == null)
         {
             beginGame.Play();
