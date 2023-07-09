@@ -32,6 +32,10 @@ public class TimeManager : MonoBehaviour
         {
             time.text = ((int)((actTime - timer) / 60)).ToString("00") + ":" + ((int)(actTime - timer) % 60).ToString("00");
             countDown.fillAmount = (actTime - timer) / actTime;
+            if((actTime - timer) <= 0)
+            {
+                UIManager.Instance.PlayEnd(1);
+            }
         }
     }
 }

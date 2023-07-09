@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
@@ -8,11 +9,14 @@ public class UIManager : Singleton<UIManager>
     public Image angerBar;
     public Image barContainer;
     public Image soundImage;
+    public VideoPlayer videoplayer;
     public Sprite[] angerSources;
     public Sprite[] soundSources;
+    public VideoClip[] videoSources;
     public GameObject taughtPanel;
     public GameObject menuPanel;
     public GameObject gamePanel;
+    public GameObject endPanel;
 
     [SerializeField]private float angerAmount;
     private int angerMax = 100;
@@ -125,5 +129,12 @@ public class UIManager : Singleton<UIManager>
         angerAmount -= amount;
         if (angerAmount < 0)
             angerAmount = 0;
+    }
+
+    public void PlayEnd(int index)
+    {
+        endPanel.SetActive(true);
+        videoplayer.clip = videoSources[index];
+        videoplayer.Play();
     }
 }

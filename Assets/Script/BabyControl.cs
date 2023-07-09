@@ -192,6 +192,7 @@ public class BabyControl : MonoBehaviour
         }
         else
         {
+            UIManager.Instance.PlayEnd(0);
             ///告诉UI孩子搜到了
             Debug.Log("哈哈哈哈哈哈哈哈");
         }
