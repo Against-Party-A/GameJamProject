@@ -27,6 +27,7 @@ public class Player : Singleton<Player>
 
     public AudioSource putAndDown;
     public AudioSource playerMove;
+    public AudioSource angrySource;
 
     protected override void Awake()
     {
@@ -218,6 +219,7 @@ public class Player : Singleton<Player>
         inputDisable = true;
         this.transform.position = parents.position;
         _BabyControl.ReturnSearch();
+        angrySource.Play();
         StartCoroutine(Stand());
     }
 
