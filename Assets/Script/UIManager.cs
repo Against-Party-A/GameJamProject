@@ -91,7 +91,6 @@ public class UIManager : Singleton<UIManager>
             {
                 barContainer.sprite = angerSources[1];
                 Player.Instance.MoveToParents();
-                
             }
         }
         else if (isRelieve && angerAmount >= 0)
@@ -112,6 +111,11 @@ public class UIManager : Singleton<UIManager>
                 barContainer.sprite = angerSources[0];
             }
         }
+    }
+
+    public void ChangeBarContainer()
+    {
+        barContainer.sprite = angerSources[0];
     }
 
     public void StartAngerTiming()
