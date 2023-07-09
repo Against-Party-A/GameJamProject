@@ -59,6 +59,7 @@ public class Task : MonoBehaviour
             isExecuting = false;
             canExecute = false;
             UIManager.Instance.StartAngerTiming();
+            Player.Instance.GetComponent<Animator>().SetBool("Dance", false);
         }
     }
 
