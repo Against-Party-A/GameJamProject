@@ -6,6 +6,7 @@ public class Task : MonoBehaviour
 {
     public int costAnger = 20;
 
+    public Canvas dialogue;
     private bool isStart;
     private bool canExecute;
     private bool isComplete;
@@ -33,7 +34,8 @@ public class Task : MonoBehaviour
         {
             isComplete = true;
             UIManager.Instance.MinusAnger(costAnger);
-            this.transform.localScale = new Vector3(1f, 1f, 1f);
+            //this.transform.localScale = new Vector3(1f, 1f, 1f);
+            dialogue.gameObject.SetActive(false);
             UIManager.Instance.StartAngerTiming();
             this.GetComponent<Task>().enabled = false;
         }
@@ -60,7 +62,8 @@ public class Task : MonoBehaviour
     public void Init()
     {
         isStart = true;
-        this.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        //this.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        dialogue.gameObject.SetActive(true);
         UIManager.Instance.StartAngerTiming();
     }
 }
