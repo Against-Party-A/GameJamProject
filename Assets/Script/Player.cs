@@ -159,9 +159,10 @@ public class Player : Singleton<Player>
             }
         }
 
-        if(other.tag.CompareTo("Shelter") == 0 && other.transform.childCount == 0)
+        if(other.tag.CompareTo("Shelter") == 0)
         {
             canPut = true;
+            other.GetComponentInChildren<CanvasGroup>().alpha = 1;
             shelter = other.transform;
         }
 
@@ -191,6 +192,7 @@ public class Player : Singleton<Player>
         if (other.tag.CompareTo("Shelter") == 0)
         {
             canPut = false;
+            other.GetComponentInChildren<CanvasGroup>().alpha = 0;
         }
         
         if(other.tag.CompareTo("Kid") == 0)
