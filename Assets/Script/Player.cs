@@ -26,6 +26,7 @@ public class Player : Singleton<Player>
     private Animator _animator;
 
     public AudioSource putAndDown;
+    public AudioSource playerMove;
 
     protected override void Awake()
     {
@@ -104,6 +105,8 @@ public class Player : Singleton<Player>
     {
         if (input.x != 0 || input.z != 0)
         {
+            if (!playerMove.isPlaying)
+                playerMove.Play();
             _animator.SetBool("isWalking", true);
             rig.MovePosition(this.transform.position + input * speed * Time.deltaTime);
             if (input.x > 0 && input.z == 0)
@@ -143,6 +146,10 @@ public class Player : Singleton<Player>
         else
         {
             _animator.SetBool("isWalking", false);
+            if (playerMove.isPlaying)
+            {
+                playerMove.Stop();
+            }
         }
     }
 

@@ -18,6 +18,7 @@ public enum PlayerState
         Searching = 3,
         BackToRandomMove = 4,
         ForcedMove = 5, ///被玩家拖拽的时候
+        EndGame = 6
 }
 public class BabyControl : MonoBehaviour
 {

@@ -12,6 +12,8 @@ public class PointMove : MonoBehaviour
     public bool beginMove = false;
     public Animator _animator;
 
+    public AudioSource babyMove;
+
     private void Awake()
     {
         _babyControl = GetComponent<BabyControl>();
@@ -24,6 +26,7 @@ public class PointMove : MonoBehaviour
         beginMove = true;
         GetComponent<Rigidbody>().isKinematic = !beginMove;
         _animator.SetBool("isWalking", true);
+        babyMove.Play();
     }
 
     public void EndMove()
@@ -31,6 +34,7 @@ public class PointMove : MonoBehaviour
         beginMove = false;
         GetComponent<Rigidbody>().isKinematic = !beginMove;
         _animator.SetBool("isWalking", false);
+        babyMove.Stop();
     }
 
     // Update is called once per frame

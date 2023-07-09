@@ -149,6 +149,7 @@ public class UIManager : Singleton<UIManager>
     public AudioSource victoryAudio;
     public AudioSource defeatAudio;
 
+    public BabyControl _BabyControl;
     public void PlayEnd(int index)
     {
         if(endPanel.activeSelf) 
@@ -157,6 +158,7 @@ public class UIManager : Singleton<UIManager>
         endPanel.SetActive(true);
         videoplayer.clip = videoSources[index];
         videoplayer.Play();
+        _BabyControl._playerState = PlayerState.EndGame;
 
         videoplayer.isLooping = index == 1;
         bgm.Stop();
