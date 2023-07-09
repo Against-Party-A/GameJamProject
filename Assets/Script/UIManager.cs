@@ -139,10 +139,12 @@ public class UIManager : Singleton<UIManager>
 
     public void PlayEnd(int index)
     {
+        if(endPanel.activeSelf) 
+            return;
+        
         endPanel.SetActive(true);
         videoplayer.clip = videoSources[index];
         videoplayer.Play();
-
 
         videoplayer.isLooping = index == 1;
 
